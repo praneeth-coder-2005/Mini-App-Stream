@@ -1,27 +1,57 @@
-<script src="//content.jwplatform.com/libraries/IDzF9Zmk.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>JWPlayer in Telegram Mini App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+    }
+    #my-video1 {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      max-width: 100%;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
 
+<!-- Load JWPlayer securely -->
+<script src="https://content.jwplatform.com/libraries/IDzF9Zmk.js"></script>
+
+<!-- JW Player container -->
 <div id="my-video1"></div>
 
 <script>
-// <![CDATA[
+  jwplayer("my-video1").setup({
+    playlist: [
+      {
+        sources: [
+          {
+            default: true,
+            type: "mp4",
+            file: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", // HTTPS URL
+            label: "HD"
+          }
+        ]
+      }
+    ],
+    primary: "html5",
+    hlshtml: true,
+    autostart: false,
+    width: "100%",
+    aspectratio: "16:9",
+    controls: true
+  });
 
-jwplayer('my-video1').setup({
-  "playlist": [
-	{
-  	"sources": [
-    	{
-      	"default": true,
-      	"type": "mp4",  // Change this to 'mp4' or any supported format
-      	"file": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", // Update with your MP4 file link
-      	"label": "HD" // Optional label
-    	}
-  	]
-	}
-  ],
-  "primary": "html5",
-  "hlshtml": true,
-  "autostart": false
-});
-
-// ]]>
+  // Ensures autoplay after user interaction in Telegram WebView
+  document.body.addEventListener('click', () => {
+    jwplayer("my-video1").play();
+  }, { once: true });
 </script>
+
+</body>
+</html>
