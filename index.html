@@ -2,55 +2,74 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>JWPlayer in Telegram Mini App</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JWPlayer Landscape Only</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=landscape" />
   <style>
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
+      background: #000;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .landscape-wrapper {
+      width: 100vh;
+      height: 100vw;
+      transform: rotate(90deg);
+      transform-origin: center;
+      position: absolute;
+      top: calc((100vh - 100vw) / 2);
+      left: calc((100vw - 100vh) / 2);
       background: #000;
     }
+
     #my-video1 {
       width: 100%;
-      aspect-ratio: 16 / 9;
-      max-width: 100%;
-      margin: auto;
+      height: 100%;
+    }
+
+    @media screen and (orientation: landscape) {
+      .landscape-wrapper {
+        transform: none;
+        width: 100vw;
+        height: 100vh;
+        position: static;
+      }
     }
   </style>
 </head>
 <body>
 
-<!-- Load JWPlayer securely -->
 <script src="https://content.jwplatform.com/libraries/IDzF9Zmk.js"></script>
 
-<!-- JW Player container -->
-<div id="my-video1"></div>
+<div class="landscape-wrapper">
+  <div id="my-video1"></div>
+</div>
 
 <script>
   jwplayer("my-video1").setup({
-    playlist: [
-      {
-        sources: [
-          {
-            default: true,
-            type: "mp4",
-            file: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", // HTTPS URL
-            label: "HD"
-          }
-        ]
-      }
-    ],
+    playlist: [{
+      image: "https://peach.blender.org/wp-content/uploads/title_anouncement.jpg",
+      sources: [{
+        file: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        label: "HD",
+        type: "mp4",
+        default: true
+      }]
+    }],
     primary: "html5",
     hlshtml: true,
     autostart: false,
+    mute: false,
+    controls: true,
     width: "100%",
-    aspectratio: "16:9",
-    controls: true
+    height: "100%",
+    skin: {
+      name: "seven"
+    },
+    stretching: "uniform"
   });
-
-  // Ensures autoplay after user interaction in Telegram WebView
-  document.body.addEventListener('click', () => {
-    jwplayer("my-video1").play();
-  }, { once: true });
 </script>
 
 </body>
