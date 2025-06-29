@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Telegram Video Stream</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body style="background-color:#000;color:white;text-align:center;font-family:sans-serif">
+  <h2>🎬 Streaming Video</h2>
+  <video id="player" controls style="width:90%;max-height:60vh;border:2px solid #fff;border-radius:10px;"></video>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const fileId = urlParams.get("file_id");
+    const player = document.getElementById("player");
+
+    if (fileId) {
+      const streamUrl = `https://your-worker.subdomain.workers.dev/stream?file_id=${fileId}`;
+      player.src = streamUrl;
+    } else {
+      document.body.innerHTML += "<p>❌ No file_id provided</p>";
+    }
+  </script>
+</body>
+</html>
